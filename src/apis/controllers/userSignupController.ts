@@ -1,4 +1,11 @@
 import { Request, Response } from "express";
-import catchAsync from "../utils/asyncErrorHandler";
+import asyncErrorHandler from "../utils/asyncErrorHandler";
 
-const createUser = catchAsync(async (req: Request, res: Response) => { }) 
+const createUser = asyncErrorHandler(async (req: Request, res: Response) => {
+  const reqbody = req.body
+  console.log(reqbody);
+})
+
+export {
+  createUser
+}
