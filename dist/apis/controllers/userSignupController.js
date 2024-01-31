@@ -15,5 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createUser = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../middlewares/asyncErrorHandler"));
 const createUser = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const reqbody = req.body;
+    const sendOtp = 'a';
 }));
 exports.createUser = createUser;
