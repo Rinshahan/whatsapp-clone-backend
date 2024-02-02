@@ -12,10 +12,12 @@
   "dependencies": {
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
+    "fast-two-sms": "^3.0.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.1",
     "nodemon": "^3.0.3",
-    "socket.io": "^4.7.4"
+    "socket.io": "^4.7.4",
+    "twilio": "^4.21.0"
   },
   "devDependencies": {
     "@types/express": "^4.17.21",

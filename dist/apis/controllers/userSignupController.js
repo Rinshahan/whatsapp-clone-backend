@@ -12,10 +12,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createUser = void 0;
+exports.sendOtp = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../middlewares/asyncErrorHandler"));
-const createUser = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const reqbody = req.body;
-    const sendOtp = 'fone';
+const dotenv_1 = __importDefault(require("dotenv"));
+const twilio_1 = __importDefault(require("twilio"));
+dotenv_1.default.config({ path: './config.env' });
+const client = (0, twilio_1.default)(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
+const sendOtp = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const phoneNumber = req.body.phone;
+    if (phoneNumber.length === 10) {
+    }
+    res.status(200).json({
+        status: 'success',
+        message: 'OTP Send successfully'
+    });
 }));
-exports.createUser = createUser;
+exports.sendOtp = sendOtp;

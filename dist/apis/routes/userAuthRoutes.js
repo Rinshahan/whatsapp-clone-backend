@@ -7,5 +7,5 @@ const express_1 = __importDefault(require("express"));
 const userSignupController_1 = require("../controllers/userSignupController");
 const userAuthRoutes = express_1.default.Router();
 userAuthRoutes.route('/login')
-    .post(userSignupController_1.createUser);
+    .post(userSignupController_1.sendOtp);
 exports.default = userAuthRoutes;

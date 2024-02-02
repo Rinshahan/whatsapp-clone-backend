@@ -13,5 +13,6 @@ app.all('*', (req, res, next) => {
     const error = new customError(`can't find ${req.originalUrl} on the server`, 404);
     next(error);
 });
-app.use(errorHandler_1.globalErrorHandler);
+app.use(errorHandler_1.errorHandler);
+//app.use(globalErrorHandler)
 exports.default = app;
