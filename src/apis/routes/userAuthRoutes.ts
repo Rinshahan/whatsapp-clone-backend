@@ -1,9 +1,9 @@
 import express from "express"
-import { sendOtp } from "../controllers/userSignupController"
+import { sendOtpPhone } from "../controllers/otpController"
 
 const userAuthRoutes = express.Router()
 
 userAuthRoutes.route('/login')
-  .post(sendOtp)
+  .post(sendOtpPhone)
 
 export default userAuthRoutes

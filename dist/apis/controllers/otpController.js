@@ -12,23 +12,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendOtp = void 0;
+exports.sendOtpPhone = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../middlewares/asyncErrorHandler"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const twilio_1 = __importDefault(require("twilio"));
-dotenv_1.default.config({ path: './config.env' });
-const client = (0, twilio_1.default)(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
-const sendOtp = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const otpServices_1 = require("../services/otpServices");
+const sendOtpPhone = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const phoneNumber = req.body.phone;
     console.log(phoneNumber);
-    yield client.messages.create({
-        body: 'this is test',
-        from: '+16592175539',
-        to: phoneNumber
-    }).then((res) => console.log(res)).catch((err) => console.log(err));
-    res.status(200).json({
-        status: 'success',
-        message: 'OTP Send successfully'
-    });
+    const sendOtp = yield (0, otpServices_1.phoneOtp)(phoneNumber);
+    if (sendOtp) {
+        res.status(200).json({
+            status: 'success',
+            message: 'OTP Send successfully'
+        });
+    }
+    else {
+        res.status(500).json({
+            status: 'failed',
+            message: 'failed to send otp'
+        });
+    }
 }));
-exports.sendOtp = sendOtp;
+exports.sendOtpPhone = sendOtpPhone;
+const veryfyphoneOtp = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { }));

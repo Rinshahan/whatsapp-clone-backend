@@ -12,23 +12,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendOtp = void 0;
-const asyncErrorHandler_1 = __importDefault(require("../middlewares/asyncErrorHandler"));
-const dotenv_1 = __importDefault(require("dotenv"));
-const twilio_1 = __importDefault(require("twilio"));
-dotenv_1.default.config({ path: './config.env' });
-const client = (0, twilio_1.default)(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
-const sendOtp = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const phoneNumber = req.body.phone;
-    console.log(phoneNumber);
-    yield client.messages.create({
-        body: 'this is test',
-        from: '+16592175539',
-        to: phoneNumber
-    }).then((res) => console.log(res)).catch((err) => console.log(err));
-    res.status(200).json({
-        status: 'success',
-        message: 'OTP Send successfully'
-    });
+const mongoose_1 = __importDefault(require("mongoose"));
+const otpSchema = new mongoose_1.default.Schema({
+    phoneNumber: String,
+    otp: String,
+    expiresAt: Date
+});
+otpSchema.index({ expiresAt: 1 });
+const Otp = mongoose_1.default.model('otp', otpSchema);
+mongoose_1.default.connection.on('connected', () => __awaiter(void 0, void 0, void 0, function* () {
+    setInterval(() => __awaiter(void 0, void 0, void 0, function* () {
+        try {
+            yield Otp.deleteMany({ expiresAt: { $lt: new Date() } }); //  delete expired otps
+            console.log("expired otp deleted successfully");
+        }
+        catch (err) {
+            console.log("error deleting in expired otps:", err);
+        }
+    }), 120000); // runs every 2 minutes
 }));
-exports.sendOtp = sendOtp;
+exports.default = Otp;
