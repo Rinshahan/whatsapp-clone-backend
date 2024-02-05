@@ -1,4 +1,4 @@
-class customError extends Error {
+export class customError extends Error {
   statusCode: number
   status: string
   isOperational: boolean

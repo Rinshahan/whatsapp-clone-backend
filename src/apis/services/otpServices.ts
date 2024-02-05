@@ -2,7 +2,10 @@ import dotenv from "dotenv"
 import twilio, { Twilio } from "twilio"
 import validatePhoneNumber from "../utils/phoneValidation"
 import generateOtp from "../utils/generateOtp"
-import Otp from "../schemas/otpSchema"
+import User from "../schemas/userSchema"
+import user from "../interfaces/userInterface"
+import { customError } from "../utils/customError"
+
 dotenv.config({ path: './config.env' })
 
 const client: Twilio = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN)
@@ -13,13 +16,15 @@ const phoneOtp = async (phoneNumber: string): Promise<boolean> => {
       return false
     } else {
       const otp = generateOtp() // generate otp
-      // store otp in db with expiration
-      const otpData = new Otp({
-        phoneNumber,
-        otp,
-        expiresAt: new Date
+      //find user and  store otp in db with expiration
+      const findUser: user = await User.findOne({ phone: phoneNumber })
+      if (!findUser) {
+        throw new customError("User not found please Register", 404)
+      }
+      const updatedUser = await User.findByIdAndUpdate(findUser._id, {
+        otp: otp,
+        otpExpiresAt: new Date(Date.now() + 120000)
       })
-      await otpData.save()
       // send otp using twilio
       await client.messages.create({ // this block is sending messages
         body: `${otp} is your OTP to login - this OTP will expires in 2 minutes`,
@@ -29,10 +34,18 @@ const phoneOtp = async (phoneNumber: string): Promise<boolean> => {
       return true
     }
   } catch (err) {
-    console.log(err);
-
-    return false
+    throw new customError(err, 404)
   }
 }
 
-export { phoneOtp }
+const verify = async (otp: string): Promise<user> => {
+  const findOtp: user = await User.findOne({ otp })
+  if (!findOtp && findOtp.otpExpiredAt < new Date()) {
+    new customError("OTP has been expired! Please try again!", 400)
+  } else {
+    await User.findByIdAndDelete(findOtp._id, { otp: null, otpExpiredAt: null })
+    return findOtp
+  }
+}
+
+export { phoneOtp, verify }

@@ -12,12 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.phoneOtp = void 0;
+exports.verify = exports.phoneOtp = void 0;
 const dotenv_1 = __importDefault(require("dotenv"));
 const twilio_1 = __importDefault(require("twilio"));
 const phoneValidation_1 = __importDefault(require("../utils/phoneValidation"));
 const generateOtp_1 = __importDefault(require("../utils/generateOtp"));
-const otpSchema_1 = __importDefault(require("../schemas/otpSchema"));
+const userSchema_1 = __importDefault(require("../schemas/userSchema"));
+const customError_1 = require("../utils/customError");
 dotenv_1.default.config({ path: './config.env' });
 const client = (0, twilio_1.default)(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 const phoneOtp = (phoneNumber) => __awaiter(void 0, void 0, void 0, function* () {
@@ -27,13 +28,15 @@ const phoneOtp = (phoneNumber) => __awaiter(void 0, void 0, void 0, function* ()
         }
         else {
             const otp = (0, generateOtp_1.default)(); // generate otp
-            // store otp in db with expiration
-            const otpData = new otpSchema_1.default({
-                phoneNumber,
-                otp,
-                expiresAt: new Date
+            //find user and  store otp in db with expiration
+            const findUser = yield userSchema_1.default.findOne({ phone: phoneNumber });
+            if (!findUser) {
+                throw new customError_1.customError("User not found please Register", 404);
+            }
+            const updatedUser = yield userSchema_1.default.findByIdAndUpdate(findUser._id, {
+                otp: otp,
+                otpExpiresAt: new Date(Date.now() + 120000)
             });
-            yield otpData.save();
             // send otp using twilio
             yield client.messages.create({
                 body: `${otp} is your OTP to login - this OTP will expires in 2 minutes`,
@@ -44,8 +47,18 @@ const phoneOtp = (phoneNumber) => __awaiter(void 0, void 0, void 0, function* ()
         }
     }
     catch (err) {
-        console.log(err);
-        return false;
+        throw new customError_1.customError(err, 404);
     }
 });
 exports.phoneOtp = phoneOtp;
+const verify = (otp) => __awaiter(void 0, void 0, void 0, function* () {
+    const findOtp = yield userSchema_1.default.findOne({ otp });
+    if (!findOtp && findOtp.otpExpiredAt < new Date()) {
+        new customError_1.customError("OTP has been expired! Please try again!", 400);
+    }
+    else {
+        yield userSchema_1.default.findByIdAndDelete(findOtp._id, { otp: null, otpExpiredAt: null });
+        return findOtp;
+    }
+});
+exports.verify = verify;

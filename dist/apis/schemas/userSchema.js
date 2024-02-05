@@ -48,7 +48,9 @@ const userSchema = new mongoose_1.default.Schema({
     isDeleted: {
         type: Boolean,
         default: false
-    }
+    },
+    otp: String,
+    otpExpiredAt: Date
 });
 userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {

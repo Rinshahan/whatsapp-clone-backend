@@ -12,25 +12,45 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendOtpPhone = void 0;
+exports.veryfyphoneOtp = exports.sendOtpPhone = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../middlewares/asyncErrorHandler"));
 const otpServices_1 = require("../services/otpServices");
-const sendOtpPhone = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const jsonwebtoken_1 = __importDefault(require("../utils/jsonwebtoken"));
+const sendOtpPhone = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const phoneNumber = req.body.phone;
-    console.log(phoneNumber);
-    const sendOtp = yield (0, otpServices_1.phoneOtp)(phoneNumber);
-    if (sendOtp) {
-        res.status(200).json({
-            status: 'success',
-            message: 'OTP Send successfully'
+    if (phoneNumber.length == 12) {
+        res.status(500).json({
+            status: "failed",
+            message: "please enter a valid phone number"
         });
     }
     else {
-        res.status(500).json({
-            status: 'failed',
-            message: 'failed to send otp'
-        });
+        const sendOtp = yield (0, otpServices_1.phoneOtp)(phoneNumber);
+        if (sendOtp) {
+            res.status(200).json({
+                status: 'success',
+                message: 'OTP Send successfully'
+            });
+        }
+        // else {
+        //   const error = new customError("Your Number is not Registered!Please Register", 404)
+        //   next(error)
+        // }
     }
 }));
 exports.sendOtpPhone = sendOtpPhone;
-const veryfyphoneOtp = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () { }));
+const veryfyphoneOtp = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const otp = req.body.otp;
+    const verfyOtp = yield (0, otpServices_1.verify)(otp);
+    if (verfyOtp) {
+        const token = (0, jsonwebtoken_1.default)(verfyOtp._id);
+        res.status(200).json({
+            status: 'success',
+            token: token,
+            data: {
+                verfyOtp
+            }
+        });
+    }
+}));
+exports.veryfyphoneOtp = veryfyphoneOtp;

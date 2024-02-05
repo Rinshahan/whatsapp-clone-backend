@@ -4,8 +4,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const otpController_1 = require("../controllers/otpController");
+const userAuthController_1 = require("../controllers/userAuthController");
+const multer_1 = __importDefault(require("multer"));
 const userAuthRoutes = express_1.default.Router();
+const upload = (0, multer_1.default)();
+userAuthRoutes.route('/register')
+    .post(upload.none(), userAuthController_1.signUpUser);
 userAuthRoutes.route('/login')
-    .post(otpController_1.sendOtpPhone);
+    .get(userAuthController_1.loginUser);
 exports.default = userAuthRoutes;

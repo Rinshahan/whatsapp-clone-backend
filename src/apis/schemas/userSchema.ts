@@ -37,7 +37,9 @@ const userSchema = new mongoose.Schema({
   isDeleted: {
     type: Boolean,
     default: false
-  }
+  },
+  otp: String,
+  otpExpiredAt: Date
 })
 
 userSchema.pre('save', async function (next) {
