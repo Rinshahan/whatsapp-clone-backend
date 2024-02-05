@@ -5,7 +5,7 @@ const otpRoutes = express.Router()
 
 otpRoutes.route('/sendOtp')
   .post(sendOtpPhone)
-  .get(veryfyphoneOtp)
+  .post(veryfyphoneOtp)
 
 export default otpRoutes
 

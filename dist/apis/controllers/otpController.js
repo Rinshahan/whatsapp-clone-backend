@@ -48,7 +48,7 @@ const veryfyphoneOtp = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(
             status: 'success',
             token: token,
             data: {
-                verfyOtp
+                user: verfyOtp
             }
         });
     }

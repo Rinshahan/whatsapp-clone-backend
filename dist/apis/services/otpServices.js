@@ -35,7 +35,7 @@ const phoneOtp = (phoneNumber) => __awaiter(void 0, void 0, void 0, function* ()
             }
             const updatedUser = yield userSchema_1.default.findByIdAndUpdate(findUser._id, {
                 otp: otp,
-                otpExpiresAt: new Date(Date.now() + 120000)
+                otpExpiredAt: new Date(Date.now() + 120000)
             });
             // send otp using twilio
             yield client.messages.create({
@@ -57,7 +57,7 @@ const verify = (otp) => __awaiter(void 0, void 0, void 0, function* () {
         new customError_1.customError("OTP has been expired! Please try again!", 400);
     }
     else {
-        yield userSchema_1.default.findByIdAndDelete(findOtp._id, { otp: null, otpExpiredAt: null });
+        yield userSchema_1.default.findByIdAndUpdate(findOtp._id, { otp: null, otpExpiredAt: null });
         return findOtp;
     }
 });

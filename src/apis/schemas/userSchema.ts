@@ -26,7 +26,7 @@ const userSchema = new mongoose.Schema({
     unique: true,
     select: false
   },
-  profilepic: {
+  image: {
     type: String,
     required: false
   },
@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false
   },
-  otp: String,
+  otp: { type: String, select: false },
   otpExpiredAt: Date
 })
 

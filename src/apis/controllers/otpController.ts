@@ -40,7 +40,7 @@ const veryfyphoneOtp = asyncErrorHandler(async (req: Request, res: Response) => 
       status: 'success',
       token: token,
       data: {
-        verfyOtp
+        user: verfyOtp
       }
     })
   }

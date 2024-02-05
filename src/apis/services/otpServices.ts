@@ -23,7 +23,7 @@ const phoneOtp = async (phoneNumber: string): Promise<boolean> => {
       }
       const updatedUser = await User.findByIdAndUpdate(findUser._id, {
         otp: otp,
-        otpExpiresAt: new Date(Date.now() + 120000)
+        otpExpiredAt: new Date(Date.now() + 120000)
       })
       // send otp using twilio
       await client.messages.create({ // this block is sending messages
@@ -43,7 +43,7 @@ const verify = async (otp: string): Promise<user> => {
   if (!findOtp && findOtp.otpExpiredAt < new Date()) {
     new customError("OTP has been expired! Please try again!", 400)
   } else {
-    await User.findByIdAndDelete(findOtp._id, { otp: null, otpExpiredAt: null })
+    await User.findByIdAndUpdate(findOtp._id, { otp: null, otpExpiredAt: null })
     return findOtp
   }
 }

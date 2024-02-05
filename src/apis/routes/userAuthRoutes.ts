@@ -1,16 +1,16 @@
 import express from "express"
 import { loginUser, signUpUser } from "../controllers/userAuthController"
 import multer from "multer"
+import { imageUpload } from "../middlewares/multer"
 
 
 const userAuthRoutes = express.Router()
 
-const upload = multer()
 
 
 userAuthRoutes.route('/register')
-  .post(upload.none(), signUpUser)
+  .post(imageUpload, signUpUser)
 userAuthRoutes.route('/login')
-  .get(loginUser)
+  .post(loginUser)
 
 export default userAuthRoutes
