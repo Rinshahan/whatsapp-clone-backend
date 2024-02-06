@@ -31,17 +31,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false
   },
-  accountCreatedDate: {
-    type: Date,
-    default: new Date().toDateString()
-  },
   isDeleted: {
     type: Boolean,
     default: false
   },
+  isOnline: {
+    type: String,
+    default: '0'
+  },
   otp: { type: String, select: false },
   otpExpiredAt: Date
-})
+}, { timestamps: true })
 
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {

@@ -12,25 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendMessage = void 0;
-const asyncErrorHandler_1 = __importDefault(require("../middlewares/asyncErrorHandler"));
-const chatServices_1 = require("../services/chatServices");
-const sendMessage = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const sender = req.params.id;
-    const reciever = req.body.reciever;
-    const message = req.body.message;
-    const sendMsg = yield (0, chatServices_1.send)(sender, reciever, message);
-    if (sendMessage.length === 0) {
-        res.status(404).json({
-            status: 'failed',
-            message: 'something went wrong'
+exports.send = void 0;
+const messageSchema_1 = __importDefault(require("../schemas/messageSchema"));
+const customError_1 = require("../utils/customError");
+const send = (sender, reciever, message) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!sender || !reciever || !message) {
+            throw new customError_1.customError("Missing required fields", 500);
+        }
+        const sendMessage = new messageSchema_1.default({
+            sender: sender,
+            reciever: reciever,
+            message: message
         });
+        yield sendMessage.save();
+        return sendMessage;
     }
-    else {
-        res.status(200).json({
-            status: "success",
-            message: sendMsg
-        });
+    catch (error) {
+        throw new customError_1.customError(error, 404);
     }
-}));
-exports.sendMessage = sendMessage;
+});
+exports.send = send;

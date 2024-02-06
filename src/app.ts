@@ -4,12 +4,16 @@ import userAuthRoutes from "./apis/routes/userAuthRoutes"
 import morgan from "morgan"
 import { customError } from "./apis/utils/customError"
 import otpRoutes from "./apis/routes/otpRoutes"
+import messageRoutes from "./apis/routes/messageRoutes"
 const app: Express = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
 app.use('/api/users', userAuthRoutes, otpRoutes)
+app.use('/api/messages', messageRoutes)
+
+
 
 app.all('*', (req: Request, res: Response, next: NextFunction) => {
   const error = new customError(`can't find ${req.originalUrl} on the server`, 404)
