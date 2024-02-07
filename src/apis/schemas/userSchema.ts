@@ -33,14 +33,15 @@ const userSchema = new mongoose.Schema({
   },
   isDeleted: {
     type: Boolean,
-    default: false
+    default: false,
+    select: false
   },
   isOnline: {
     type: String,
     default: '0'
   },
   otp: { type: String, select: false },
-  otpExpiredAt: Date
+  otpExpiredAt: { type: Date, select: false }
 }, { timestamps: true })
 
 userSchema.pre('save', async function (next) {

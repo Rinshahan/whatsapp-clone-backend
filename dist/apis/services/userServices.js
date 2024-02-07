@@ -12,22 +12,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllTheUsers = void 0;
-const asyncErrorHandler_1 = __importDefault(require("../middlewares/asyncErrorHandler"));
-const userServices_1 = require("../services/userServices");
-const customError_1 = require("../utils/customError");
-const getAllTheUsers = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const getUsers = yield (0, userServices_1.getAllUsers)();
-    if (getUsers.length === 0) {
-        throw new customError_1.customError("No Users Found", 404);
-    }
-    else {
-        res.status(200).json({
-            status: 'success',
-            data: {
-                getUsers
-            }
-        });
-    }
-}));
-exports.getAllTheUsers = getAllTheUsers;
+exports.getAllUsers = void 0;
+const userSchema_1 = __importDefault(require("../schemas/userSchema"));
+const getAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
+    const users = yield userSchema_1.default.find();
+    return users;
+});
+exports.getAllUsers = getAllUsers;

@@ -10,11 +10,12 @@ const morgan_1 = __importDefault(require("morgan"));
 const customError_1 = require("./apis/utils/customError");
 const otpRoutes_1 = __importDefault(require("./apis/routes/otpRoutes"));
 const messageRoutes_1 = __importDefault(require("./apis/routes/messageRoutes"));
+const userRoutes_1 = __importDefault(require("./apis/routes/userRoutes"));
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, morgan_1.default)('dev'));
-app.use('/api/users', userAuthRoutes_1.default, otpRoutes_1.default);
+app.use('/api/user', userAuthRoutes_1.default, otpRoutes_1.default, userRoutes_1.default);
 app.use('/api/messages', messageRoutes_1.default);
 app.all('*', (req, res, next) => {
     const error = new customError_1.customError(`can't find ${req.originalUrl} on the server`, 404);

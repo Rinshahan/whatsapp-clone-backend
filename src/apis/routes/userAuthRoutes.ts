@@ -6,8 +6,6 @@ import { imageUpload } from "../middlewares/multer"
 
 const userAuthRoutes = express.Router()
 
-
-
 userAuthRoutes.route('/register')
   .post(imageUpload, signUpUser)
 userAuthRoutes.route('/login')

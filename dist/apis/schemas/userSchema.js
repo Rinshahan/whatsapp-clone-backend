@@ -44,14 +44,15 @@ const userSchema = new mongoose_1.default.Schema({
     },
     isDeleted: {
         type: Boolean,
-        default: false
+        default: false,
+        select: false
     },
     isOnline: {
         type: String,
         default: '0'
     },
     otp: { type: String, select: false },
-    otpExpiredAt: Date
+    otpExpiredAt: { type: Date, select: false }
 }, { timestamps: true });
 userSchema.pre('save', function (next) {
     return __awaiter(this, void 0, void 0, function* () {

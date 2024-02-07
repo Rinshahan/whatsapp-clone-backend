@@ -5,12 +5,15 @@ import morgan from "morgan"
 import { customError } from "./apis/utils/customError"
 import otpRoutes from "./apis/routes/otpRoutes"
 import messageRoutes from "./apis/routes/messageRoutes"
+import userRoutes from "./apis/routes/userRoutes"
+
+
 const app: Express = express()
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
-app.use('/api/users', userAuthRoutes, otpRoutes)
+app.use('/api/user', userAuthRoutes, otpRoutes, userRoutes)
 app.use('/api/messages', messageRoutes)
 
 
