@@ -4,7 +4,8 @@ import { getAllUsers } from "../services/userServices";
 import { customError } from "../utils/customError";
 
 const getAllTheUsers = asyncErrorHandler(async (req: Request, res: Response) => {
-  const getUsers = await getAllUsers()
+  const loggedInUserId: string = req.user._id
+  const getUsers = await getAllUsers(loggedInUserId)
   if (getUsers.length === 0) {
     throw new customError("No Users Found", 404)
   } else {

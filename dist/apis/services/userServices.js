@@ -14,8 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getAllUsers = void 0;
 const userSchema_1 = __importDefault(require("../schemas/userSchema"));
-const getAllUsers = () => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield userSchema_1.default.find();
+const getAllUsers = (loggedUserId) => __awaiter(void 0, void 0, void 0, function* () {
+    const users = yield userSchema_1.default.find({ _id: { $ne: loggedUserId } });
     return users;
 });
 exports.getAllUsers = getAllUsers;

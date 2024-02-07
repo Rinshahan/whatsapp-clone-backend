@@ -17,7 +17,8 @@ const asyncErrorHandler_1 = __importDefault(require("../middlewares/asyncErrorHa
 const userServices_1 = require("../services/userServices");
 const customError_1 = require("../utils/customError");
 const getAllTheUsers = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const getUsers = yield (0, userServices_1.getAllUsers)();
+    const loggedInUserId = req.user._id;
+    const getUsers = yield (0, userServices_1.getAllUsers)(loggedInUserId);
     if (getUsers.length === 0) {
         throw new customError_1.customError("No Users Found", 404);
     }
