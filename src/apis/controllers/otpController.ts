@@ -4,7 +4,6 @@ import asyncErrorHandler from "../middlewares/asyncErrorHandler";
 import { phoneOtp, verify } from "../services/otpServices";
 import user from "../interfaces/userInterface";
 import generateToken from "../utils/jsonwebtoken";
-import { customError } from "../utils/customError";
 
 
 

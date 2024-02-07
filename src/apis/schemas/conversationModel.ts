@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import conversation from "../interfaces/conversationInterface";
 
 const conversationSchema = new mongoose.Schema({
   participants: [
@@ -14,4 +15,8 @@ const conversationSchema = new mongoose.Schema({
       default: []
     }
   ]
-})
+}, { timestamps: true })
+
+const Conversation = mongoose.model<conversation>('Conversation', conversationSchema)
+
+export default Conversation
