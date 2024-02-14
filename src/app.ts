@@ -6,10 +6,10 @@ import { customError } from "./apis/utils/customError"
 import otpRoutes from "./apis/routes/otpRoutes"
 import messageRoutes from "./apis/routes/messageRoutes"
 import userRoutes from "./apis/routes/userRoutes"
-
+import cors from "cors"
 
 const app: Express = express()
-
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))
