@@ -30,7 +30,8 @@ const loginUser = asyncErrorHandler(async (req: Request, res: Response, next: Ne
   const token = generateToken(authenticate._id)
   res.status(200).json({
     status: "success",
-    token: token
+    token: token,
+    user: authenticate
   })
 })
 

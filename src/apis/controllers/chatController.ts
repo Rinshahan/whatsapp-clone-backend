@@ -31,7 +31,7 @@ const getMessages = asyncErrorHandler(async (req: Request, res: Response) => {
   } else {
     res.status(200).json({
       status: "success",
-      data: getTheMessage.messages
+      message: getTheMessage.messages
     })
   }
 })

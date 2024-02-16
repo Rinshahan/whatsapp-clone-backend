@@ -42,7 +42,8 @@ const loginUser = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter
     const token = (0, jsonwebtoken_1.default)(authenticate._id);
     res.status(200).json({
         status: "success",
-        token: token
+        token: token,
+        user: authenticate
     });
 }));
 exports.loginUser = loginUser;

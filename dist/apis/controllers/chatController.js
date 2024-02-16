@@ -45,7 +45,7 @@ const getMessages = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(voi
     else {
         res.status(200).json({
             status: "success",
-            data: getTheMessage.messages
+            message: getTheMessage.messages
         });
     }
 }));
