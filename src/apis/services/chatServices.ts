@@ -41,6 +41,7 @@ const send = async (sender: string, reciever: string, message: string): Promise<
     Promise.all([conversation.save(), newMessage.save()]) // this will run in parellel
     return newMessage
   } catch (error) {
+    console.log(error)
     throw new customError(error, 404)
   }
 }

@@ -48,6 +48,7 @@ const send = (sender, reciever, message) => __awaiter(void 0, void 0, void 0, fu
         return newMessage;
     }
     catch (error) {
+        console.log(error);
         throw new customError_1.customError(error, 404);
     }
 });

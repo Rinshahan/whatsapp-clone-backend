@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import { Request, Response, json } from "express";
 import asyncErrorHandler from "../middlewares/asyncErrorHandler";
 import { get, send } from "../services/chatServices";
 import chat from "../interfaces/chatInterface";
