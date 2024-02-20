@@ -3,6 +3,7 @@ import app from "./app";
 import connectDB from "./config/dbConnection";
 import dotenv from "dotenv"
 import http from 'http'
+import sockets from "./apis/socket/chatSockets";
 dotenv.config({ path: '../config.env' })
 connectDB()
 
@@ -15,9 +16,7 @@ const io = new Server(httpServer, {
   }
 })
 
-io.on("connection", (socket) => {
-  console.log("New User Connected", socket.id)
-})
+io.on("connection", sockets)
 
 
 httpServer.listen(port, () => {
