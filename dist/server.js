@@ -3,21 +3,23 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const socket_io_1 = require("socket.io");
 const app_1 = __importDefault(require("./app"));
 const dbConnection_1 = __importDefault(require("./config/dbConnection"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const socket_io_1 = require("socket.io");
+const http_1 = __importDefault(require("http"));
 dotenv_1.default.config({ path: '../config.env' });
 (0, dbConnection_1.default)();
+const httpServer = http_1.default.createServer(app_1.default);
 const port = 3000;
-const server = app_1.default.listen(port, () => {
-    console.log(`Listening to ${port}`);
+const io = new socket_io_1.Server(httpServer, {
+    cors: {
+        origin: ["http://localhost:4200"]
+    }
 });
-const io = new socket_io_1.Server(server);
 io.on("connection", (socket) => {
-    console.log("what is socket:", socket);
-    socket.on("chat", (payload) => {
-        console.log("what is payload:", payload);
-        io.emit("chat", payload);
-    });
+    console.log("New User Connected", socket.id);
+});
+httpServer.listen(port, () => {
+    console.log(`Listening to ${port}`);
 });

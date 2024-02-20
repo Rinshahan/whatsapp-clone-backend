@@ -12,8 +12,13 @@ const otpRoutes_1 = __importDefault(require("./apis/routes/otpRoutes"));
 const messageRoutes_1 = __importDefault(require("./apis/routes/messageRoutes"));
 const userRoutes_1 = __importDefault(require("./apis/routes/userRoutes"));
 const cors_1 = __importDefault(require("cors"));
+const corsOptions = {
+    origin: "http://localhost:4200",
+    credentials: true, //access-control-allow-credentials:true
+    optionSuccessStatus: 200,
+};
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use((0, morgan_1.default)('dev'));

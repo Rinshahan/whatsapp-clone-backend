@@ -8,8 +8,14 @@ import messageRoutes from "./apis/routes/messageRoutes"
 import userRoutes from "./apis/routes/userRoutes"
 import cors from "cors"
 
+const corsOptions = {
+  origin: "http://localhost:4200",
+  credentials: true, //access-control-allow-credentials:true
+  optionSuccessStatus: 200,
+};
+
 const app: Express = express()
-app.use(cors())
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(morgan('dev'))

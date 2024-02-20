@@ -1,26 +1,31 @@
+import { Server } from "socket.io";
 import app from "./app";
 import connectDB from "./config/dbConnection";
 import dotenv from "dotenv"
-import { Server } from "socket.io"
+import http from 'http'
 dotenv.config({ path: '../config.env' })
 connectDB()
 
+const httpServer = http.createServer(app)
 const port: Number = 3000
 
-const server = app.listen(port, () => {
+const io = new Server(httpServer, {
+  cors: {
+    origin: ["http://localhost:4200"]
+  }
+})
+
+io.on("connection", (socket) => {
+  console.log("New User Connected", socket.id)
+})
+
+
+httpServer.listen(port, () => {
   console.log(`Listening to ${port}`)
 })
 
-const io = new Server(server)
 
-io.on("connection", (socket) => {
-  console.log("what is socket:", socket)
 
-  socket.on("chat", (payload) => {
-    console.log("what is payload:", payload)
-    io.emit("chat", payload)
-  })
-})
 
 
 
