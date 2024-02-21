@@ -17,6 +17,7 @@ const conversationModel_1 = __importDefault(require("../schemas/conversationMode
 const messageSchema_1 = __importDefault(require("../schemas/messageSchema"));
 const customError_1 = require("../utils/customError");
 const send = (sender, reciever, message) => __awaiter(void 0, void 0, void 0, function* () {
+    console.log(sender, reciever, message);
     try {
         // check is it exists
         if (!sender || !reciever || !message) {
