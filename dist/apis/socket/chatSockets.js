@@ -13,9 +13,13 @@ const chatServices_1 = require("../services/chatServices");
 const sockets = (socket) => {
     console.log("New User Connected", socket.id);
     socket.on("sendMessage", (data) => __awaiter(void 0, void 0, void 0, function* () {
-        console.log(data);
-        const newMessage = yield (0, chatServices_1.send)(data.sender, data.userToChatId, data.message);
-        socket.emit("messageRecieved", newMessage);
+        try {
+            const newMessage = yield (0, chatServices_1.send)(data.sender, data.userToChatId, data.message);
+            socket.emit("newMessage", newMessage);
+        }
+        catch (err) {
+            console.log(err);
+        }
     }));
 };
 exports.default = sockets;
