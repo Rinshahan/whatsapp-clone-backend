@@ -6,10 +6,10 @@ import { send } from "../services/chatServices"
 const sockets = (socket: Socket) => {
   console.log("New User Connected", socket.id)
 
-  socket.on("sendMessage", (data) => {
+  socket.on("sendMessage", async (data) => {
     console.log(data)
-    send(data.sender, data.userToChatId, data.message)
-    socket.emit("messageRecieved", data)
+    const newMessage = await send(data.sender, data.userToChatId, data.message)
+    socket.emit("messageRecieved", newMessage)
   })
 }
 
