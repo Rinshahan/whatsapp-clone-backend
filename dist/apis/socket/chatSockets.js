@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const chatServices_1 = require("../services/chatServices");
+const socket_io_client_1 = require("socket.io-client");
 const sockets = (socket) => {
     console.log("New User Connected", socket.id);
     socket.on("sendMessage", (data) => __awaiter(void 0, void 0, void 0, function* () {
@@ -18,7 +19,10 @@ const sockets = (socket) => {
             // emit back to sender
             socket.emit("newMessage", newMessage);
             // emit message to reciever
-            socket.to(data.userToChatId).emit("newMessage", newMessage);
+            const recieverSocket = socket_io_client_1.io.sockets.sockets[data.userToChatId];
+            if (recieverSocket) {
+                recieverSocket.emit("newMessage", newMessage);
+            }
         }
         catch (err) {
             console.log(err);

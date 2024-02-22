@@ -1,6 +1,7 @@
 import { Socket } from "socket.io"
 import { sendMessage } from "../controllers/chatController"
 import { send } from "../services/chatServices"
+import { io } from "socket.io-client"
 
 
 const sockets = (socket: Socket) => {
@@ -11,7 +12,10 @@ const sockets = (socket: Socket) => {
       // emit back to sender
       socket.emit("newMessage", newMessage)
       // emit message to reciever
-      socket.to(data.userToChatId).emit("newMessage", newMessage)
+      const recieverSocket = io.sockets.sockets[data.userToChatId]
+      if (recieverSocket) {
+        recieverSocket.emit("newMessage", newMessage)
+      }
     } catch (err) {
       console.log(err)
     }

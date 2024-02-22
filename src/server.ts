@@ -22,12 +22,3 @@ io.on("connection", sockets)
 httpServer.listen(port, () => {
   console.log(`Listening to ${port}`)
 })
-
-
-
-
-
-
-
-
-

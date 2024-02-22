@@ -7,7 +7,6 @@ import { customError } from "../utils/customError"
 
 
 const send = async (sender: string, reciever: string, message: string): Promise<chat> => {
-  console.log(sender, reciever, message)
   try {
     // check is it exists
     if (!sender || !reciever || !message) {
