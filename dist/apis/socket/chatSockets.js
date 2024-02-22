@@ -15,7 +15,10 @@ const sockets = (socket) => {
     socket.on("sendMessage", (data) => __awaiter(void 0, void 0, void 0, function* () {
         try {
             const newMessage = yield (0, chatServices_1.send)(data.sender, data.userToChatId, data.message);
+            // emit back to sender
             socket.emit("newMessage", newMessage);
+            // emit message to reciever
+            socket.to(data.userToChatId).emit("newMessage", newMessage);
         }
         catch (err) {
             console.log(err);
