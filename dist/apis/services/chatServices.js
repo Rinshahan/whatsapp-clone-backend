@@ -40,7 +40,9 @@ const send = (sender, reciever, message) => __awaiter(void 0, void 0, void 0, fu
         const newMessage = new messageSchema_1.default({
             sender: sender,
             reciever: reciever,
-            message: message
+            message: message,
+            createdAt: new Date(),
+            updatedAt: new Date()
         });
         if (newMessage) {
             conversation.messages.push(newMessage._id);

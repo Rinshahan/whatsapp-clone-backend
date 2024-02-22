@@ -32,7 +32,9 @@ const send = async (sender: string, reciever: string, message: string): Promise<
     const newMessage = new Message({
       sender: sender,
       reciever: reciever,
-      message: message
+      message: message,
+      createdAt: new Date(),
+      updatedAt: new Date()
     })
 
     if (newMessage) {
