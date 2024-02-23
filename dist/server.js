@@ -31,9 +31,10 @@ io.on("connection", (socket) => {
     console.log('new User Connected', socket.id);
     socket.on("sendMessage", (data) => __awaiter(void 0, void 0, void 0, function* () {
         try {
+            // this send method saves the datas in the db and return 
             const newMessage = yield (0, chatServices_1.send)(data.sender, data.userToChatId, data.message);
-            // emit back to sender
-            socket.emit("newMessage", newMessage);
+            // emit back to the client
+            io.emit("newMessage", newMessage);
         }
         catch (err) {
             console.log(err);

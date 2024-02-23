@@ -17,14 +17,15 @@ const io = new Server(httpServer, {
   }
 })
 
+
 io.on("connection", (socket) => {
   console.log('new User Connected', socket.id)
   socket.on("sendMessage", async (data) => {
     try {
+      // this send method saves the datas in the db and return 
       const newMessage = await send(data.sender, data.userToChatId, data.message)
-      // emit back to sender
-      socket.emit("newMessage", newMessage)
-
+      // emit back to the client
+      io.emit("newMessage", newMessage)
     } catch (err) {
       console.log(err)
     }
