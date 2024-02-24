@@ -1,10 +1,10 @@
-import { Server } from "socket.io";
+import { Server, Socket } from "socket.io";
 import app from "./app";
 import connectDB from "./config/dbConnection";
 import dotenv from "dotenv"
 import http from 'http'
+import sockets from "./apis/socket/chatSockets";
 
-import { send } from "./apis/services/chatServices";
 dotenv.config({ path: '../config.env' })
 connectDB()
 
@@ -18,19 +18,7 @@ const io = new Server(httpServer, {
 })
 
 
-io.on("connection", (socket) => {
-  console.log('new User Connected', socket.id)
-  socket.on("sendMessage", async (data) => {
-    try {
-      // this send method saves the datas in the db and return 
-      const newMessage = await send(data.sender, data.userToChatId, data.message)
-      // emit back to the client
-      io.emit("newMessage", newMessage)
-    } catch (err) {
-      console.log(err)
-    }
-  })
-})
+io.on("connection", sockets)
 
 
 httpServer.listen(port, () => {
