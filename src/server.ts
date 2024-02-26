@@ -3,7 +3,7 @@ import app from "./app";
 import connectDB from "./config/dbConnection";
 import dotenv from "dotenv"
 import http from 'http'
-import sockets from "./apis/socket/chatSockets";
+import sockets from "./apis/socket/routes";
 
 dotenv.config({ path: '../config.env' })
 connectDB()
