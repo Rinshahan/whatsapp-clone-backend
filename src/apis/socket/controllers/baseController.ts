@@ -2,7 +2,7 @@ import { Socket } from "socket.io";
 
 export class BaseController {
   socket: Socket
-  constructor(socket) {
+  constructor(socket: Socket) {
     this.socket = socket
   }
 }
