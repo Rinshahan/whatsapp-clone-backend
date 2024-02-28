@@ -16,6 +16,7 @@ class RoomController extends baseController_1.BaseController {
         super(...arguments);
         this.joinRoom = (roomId) => __awaiter(this, void 0, void 0, function* () {
             this.socket.join(roomId);
+            console.log(roomId);
         });
     }
 }

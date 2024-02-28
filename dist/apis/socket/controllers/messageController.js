@@ -19,25 +19,39 @@ const baseController_1 = require("./baseController");
 class MessageController extends baseController_1.BaseController {
     constructor() {
         super(...arguments);
-        this.sendMessage = ({ sender, reciever, message }) => __awaiter(this, void 0, void 0, function* () {
-            let findConversation = yield conversationModel_1.default.findOne({
-                participants: { $all: [sender, reciever] }
-            });
-            if (!findConversation) {
-                conversationModel_1.default.create({
-                    participants: [sender, reciever],
-                    messages: message
+        this.sendMessage = ({ sender, reciever, message, room }) => __awaiter(this, void 0, void 0, function* () {
+            try {
+                console.log(this.socket.rooms);
+                console.log(sender, reciever, message);
+                let findConversation = yield conversationModel_1.default.findOne({
+                    participants: { $all: [sender, reciever] }
                 });
+                if (findConversation === null) {
+                    findConversation = yield conversationModel_1.default.create({
+                        participants: [sender, reciever],
+                        messages: []
+                    });
+                }
+                const newMessage = yield messageSchema_1.default.create({
+                    sender: sender,
+                    reciever: reciever,
+                    message: message,
+                    createdAt: new Date(),
+                    updatedAt: new Date()
+                });
+                if (findConversation) {
+                    findConversation.messages.push(newMessage._id);
+                }
+                findConversation.save();
+                yield newMessage.save();
+                // let skt = this.socket.broadcast
+                // skt = room ? skt.to(room) : skt
+                this.socket.to(room).emit("new-message", newMessage);
+                // this.socket.broadcast.emit("new-message", newMessage)
             }
-            const newMessage = yield messageSchema_1.default.create({
-                sender: sender,
-                reciever: reciever,
-                message: message,
-                createdAt: new Date(),
-                updatedAt: new Date()
-            });
-            yield newMessage.save();
-            this.socket.to(reciever).emit("newMessage", newMessage);
+            catch (err) {
+                console.log('Error :', err);
+            }
         });
     }
 }
