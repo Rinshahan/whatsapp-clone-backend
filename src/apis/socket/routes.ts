@@ -4,9 +4,7 @@ import { MessageController } from "./controllers/messageController"
 import { RoomController } from "./controllers/roomController";
 
 // Function to create unique room name for two users
-function getRoomName(userId1, userId2) {
-  return userId1 < userId2 ? `${userId1}-${userId2}` : `${userId2}-${userId1}`;
-}
+
 
 
 const sockets = (socket: Socket) => {
@@ -15,7 +13,6 @@ const sockets = (socket: Socket) => {
   const roomController = new RoomController(socket)
   socket.on("send-message", messageController.sendMessage)
   socket.on('join-room', roomController.joinRoom)
-
 }
 
 export default sockets
