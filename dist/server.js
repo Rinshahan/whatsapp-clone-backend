@@ -18,7 +18,9 @@ const io = new socket_io_1.Server(httpServer, {
         origin: ["http://localhost:4200"]
     }
 });
-io.on("connection", routes_1.default);
+io.on("connection", (socket) => {
+    (0, routes_1.default)(socket, io);
+});
 httpServer.listen(port, () => {
     console.log(`Listening to ${port}`);
 });

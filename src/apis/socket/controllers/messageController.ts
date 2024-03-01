@@ -4,8 +4,10 @@ import Conversation from "../../schemas/conversationModel";
 import Message from "../../schemas/messageSchema";
 import { BaseController } from "./baseController";
 import conversation from "../../interfaces/conversationInterface";
+import { Server } from "socket.io";
 
 export class MessageController extends BaseController {
+
   sendMessage = async ({ sender, reciever, message, room }) => {
     try {
       console.log(this.socket.rooms)
@@ -42,8 +44,10 @@ export class MessageController extends BaseController {
 
       // let skt = this.socket.broadcast
       // skt = room ? skt.to(room) : skt
-      this.socket.to(room).emit("new-message", newMessage)
+      console.log(room)
+      // this.socket.to(room).emit("new-message", newMessage)
       // this.socket.broadcast.emit("new-message", newMessage)
+      this.io.to(room).emit("new-message", newMessage)
 
     } catch (err) {
       console.log('Error :', err)

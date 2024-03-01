@@ -18,7 +18,11 @@ const io = new Server(httpServer, {
 })
 
 
-io.on("connection", sockets)
+io.on("connection", (socket)=>{
+  sockets(socket,io)
+})
+
+
 
 
 httpServer.listen(port, () => {
