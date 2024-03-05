@@ -10,7 +10,6 @@ export class MessageController extends BaseController {
 
   sendMessage = async ({ sender, reciever, message, room }) => {
     try {
-      console.log(this.socket.rooms)
       console.log(sender, reciever, message)
 
       let findConversation: conversation = await Conversation.findOne({

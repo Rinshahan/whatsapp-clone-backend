@@ -21,7 +21,6 @@ class MessageController extends baseController_1.BaseController {
         super(...arguments);
         this.sendMessage = ({ sender, reciever, message, room }) => __awaiter(this, void 0, void 0, function* () {
             try {
-                console.log(this.socket.rooms);
                 console.log(sender, reciever, message);
                 let findConversation = yield conversationModel_1.default.findOne({
                     participants: { $all: [sender, reciever] }

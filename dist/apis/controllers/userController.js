@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getAllTheUsers = void 0;
+exports.getUser = exports.getAllTheUsers = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../middlewares/asyncErrorHandler"));
 const userServices_1 = require("../services/userServices");
 const customError_1 = require("../utils/customError");
@@ -32,3 +32,15 @@ const getAllTheUsers = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(
     }
 }));
 exports.getAllTheUsers = getAllTheUsers;
+const getUser = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.params.id;
+    const user = yield (0, userServices_1.getOneUser)(userId);
+    if (!user) {
+        throw new customError_1.customError("No User Found", 404);
+    }
+    res.status(200).json({
+        status: 'success',
+        data: user
+    });
+}));
+exports.getUser = getUser;

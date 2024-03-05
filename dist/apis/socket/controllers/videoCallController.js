@@ -8,19 +8,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOneUser = exports.getAllUsers = void 0;
-const userSchema_1 = __importDefault(require("../schemas/userSchema"));
-const getAllUsers = (loggedUserId) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield userSchema_1.default.find({ _id: { $ne: loggedUserId } });
-    return users;
-});
-exports.getAllUsers = getAllUsers;
-const getOneUser = (userId) => __awaiter(void 0, void 0, void 0, function* () {
-    const users = yield userSchema_1.default.findById(userId);
-    return users;
-});
-exports.getOneUser = getOneUser;
+exports.VideoCallController = void 0;
+const baseController_1 = require("./baseController");
+class VideoCallController extends baseController_1.BaseController {
+    constructor() {
+        super(...arguments);
+        this.initiateCall = ({ offer, roomId }) => __awaiter(this, void 0, void 0, function* () {
+            this.io.to(roomId).emit("incoming-call", offer);
+        });
+    }
+}
+exports.VideoCallController = VideoCallController;

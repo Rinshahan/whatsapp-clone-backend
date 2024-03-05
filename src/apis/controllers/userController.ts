@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import asyncErrorHandler from "../middlewares/asyncErrorHandler";
-import { getAllUsers } from "../services/userServices";
+import { getAllUsers, getOneUser } from "../services/userServices";
 import { customError } from "../utils/customError";
 import user from "../interfaces/userInterface";
 
@@ -20,7 +20,21 @@ const getAllTheUsers = asyncErrorHandler(async (req: Request, res: Response) => 
 })
 
 
+const getUser = asyncErrorHandler(async (req: Request, res: Response) => {
+  const userId: string = req.params.id
+  const user: user = await getOneUser(userId)
+  if (!user) {
+    throw new customError("No User Found", 404)
+  }
+  res.status(200).json({
+    status: 'success',
+    data: user
+  })
+})
+
+
 export {
-  getAllTheUsers
+  getAllTheUsers,
+  getUser
 }
 

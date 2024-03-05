@@ -9,4 +9,6 @@ const protectRoutes_1 = __importDefault(require("../middlewares/protectRoutes"))
 const userRoutes = express_1.default.Router();
 userRoutes.route('/')
     .get(protectRoutes_1.default, userController_1.getAllTheUsers);
+userRoutes.route('/:id')
+    .get(protectRoutes_1.default, userController_1.getUser);
 exports.default = userRoutes;

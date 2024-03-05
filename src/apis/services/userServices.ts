@@ -6,6 +6,12 @@ const getAllUsers = async (loggedUserId): Promise<user[]> => {
   return users
 }
 
+const getOneUser = async (userId: string): Promise<user> => {
+  const users = await User.findById(userId)
+  return users
+}
+
 export {
-  getAllUsers
+  getAllUsers,
+  getOneUser
 }
