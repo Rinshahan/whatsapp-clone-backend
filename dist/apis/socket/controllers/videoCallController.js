@@ -15,7 +15,10 @@ class VideoCallController extends baseController_1.BaseController {
     constructor() {
         super(...arguments);
         this.initiateCall = ({ offer, roomId }) => __awaiter(this, void 0, void 0, function* () {
-            this.io.to(roomId).emit("incoming-call", offer);
+            //this.io.to(roomId).emit("incoming-call", offer)
+            this.socket.broadcast.emit("incoming-call", offer);
+        });
+        this.answerCall = ({}) => __awaiter(this, void 0, void 0, function* () {
         });
     }
 }
