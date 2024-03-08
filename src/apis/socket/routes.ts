@@ -17,7 +17,7 @@ const sockets = (socket: Socket, io: Server) => {
   socket.on("send-message", messageController.sendMessage)
   socket.on('join-room', roomController.joinRoom)
   socket.on("initiate-call", videoController.initiateCall)
-  socket.on("answer-call", videoController.answerCall)
+  socket.on("answer-made", videoController.answerCall)
 }
 
 export default sockets
