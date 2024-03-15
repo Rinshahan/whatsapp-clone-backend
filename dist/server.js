@@ -12,7 +12,7 @@ const routes_1 = __importDefault(require("./apis/socket/routes"));
 dotenv_1.default.config({ path: '../config.env' });
 (0, dbConnection_1.default)();
 const httpServer = http_1.default.createServer(app_1.default);
-const port = 3000;
+const port = 4000;
 const io = new socket_io_1.Server(httpServer, {
     cors: {
         origin: ["http://localhost:4200"]

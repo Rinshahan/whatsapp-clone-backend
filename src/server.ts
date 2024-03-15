@@ -9,7 +9,7 @@ dotenv.config({ path: '../config.env' })
 connectDB()
 
 const httpServer = http.createServer(app)
-const port: Number = 3000
+const port: Number = 4000
 
 const io = new Server(httpServer, {
   cors: {

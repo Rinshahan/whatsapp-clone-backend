@@ -16,6 +16,7 @@ class VideoCallController extends baseController_1.BaseController {
     constructor() {
         super(...arguments);
         this.initiateCall = ({ offer, roomId, caller, reciever }) => __awaiter(this, void 0, void 0, function* () {
+            console.log(roomId);
             const callerData = yield (0, userServices_1.getOneUser)(caller);
             const recieverData = yield (0, userServices_1.getOneUser)(reciever);
             const data = {
@@ -24,9 +25,32 @@ class VideoCallController extends baseController_1.BaseController {
                 caller: callerData,
                 reciever: recieverData
             };
-            this.socket.broadcast.emit("incoming-call", data);
+            //this.socket.broadcast.emit("incoming-call", data)
+            this.socket.to(roomId).emit("incoming-call", data);
         });
-        this.answerCall = ({}) => __awaiter(this, void 0, void 0, function* () {
+        this.answerCall = ({ roomId, answerer, reciever, answer }) => __awaiter(this, void 0, void 0, function* () {
+            console.log(roomId);
+            const answeredUser = yield (0, userServices_1.getOneUser)(answerer);
+            const recievedUser = yield (0, userServices_1.getOneUser)(reciever);
+            const data = {
+                answerer: answeredUser,
+                recievedUser: recievedUser,
+                answer: answer
+            };
+            //this.socket.broadcast.emit("answer-made", data)
+            this.socket.to(roomId).emit("answer-made", data);
+        });
+        this.iceCandidate = ({ roomId, sender, reciever, candidate }) => __awaiter(this, void 0, void 0, function* () {
+            console.log(roomId);
+            const sendedUser = yield (0, userServices_1.getOneUser)(sender);
+            const receievedUser = yield (0, userServices_1.getOneUser)(reciever);
+            const data = {
+                sender: sendedUser,
+                reciever: receievedUser,
+                candidate: candidate
+            };
+            //this.socket.broadcast.emit("ice-candidate", data)
+            this.socket.to(roomId).emit("ice-candidate", data);
         });
     }
 }

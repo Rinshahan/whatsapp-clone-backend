@@ -43,7 +43,7 @@ export class MessageController extends BaseController {
 
       // let skt = this.socket.broadcast
       // skt = room ? skt.to(room) : skt
-      console.log(room)
+      //console.log(room)
       // this.socket.to(room).emit("new-message", newMessage)
       // this.socket.broadcast.emit("new-message", newMessage)
       this.io.to(room).emit("new-message", newMessage)

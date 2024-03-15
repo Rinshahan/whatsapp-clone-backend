@@ -45,7 +45,7 @@ class MessageController extends baseController_1.BaseController {
                 yield newMessage.save();
                 // let skt = this.socket.broadcast
                 // skt = room ? skt.to(room) : skt
-                console.log(room);
+                //console.log(room)
                 // this.socket.to(room).emit("new-message", newMessage)
                 // this.socket.broadcast.emit("new-message", newMessage)
                 this.io.to(room).emit("new-message", newMessage);
