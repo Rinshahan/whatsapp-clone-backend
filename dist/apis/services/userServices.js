@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getOneUser = exports.getAllUsers = void 0;
+exports.updatedUser = exports.getOneUser = exports.getAllUsers = void 0;
 const userSchema_1 = __importDefault(require("../schemas/userSchema"));
 const getAllUsers = (loggedUserId) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield userSchema_1.default.find({ _id: { $ne: loggedUserId } });
@@ -24,3 +24,8 @@ const getOneUser = (userId) => __awaiter(void 0, void 0, void 0, function* () {
     return users;
 });
 exports.getOneUser = getOneUser;
+const updatedUser = (userId, userData) => __awaiter(void 0, void 0, void 0, function* () {
+    const updatedUserById = yield userSchema_1.default.findByIdAndUpdate(userId, userData, { new: true });
+    return updatedUserById;
+});
+exports.updatedUser = updatedUser;

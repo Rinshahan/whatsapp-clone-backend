@@ -11,7 +11,13 @@ const getOneUser = async (userId: string): Promise<user> => {
   return users
 }
 
+const updatedUser = async (userId: string, userData): Promise<user> => {
+  const updatedUserById = await User.findByIdAndUpdate(userId, userData, { new: true })
+  return updatedUserById
+}
+
 export {
   getAllUsers,
-  getOneUser
+  getOneUser,
+  updatedUser
 }

@@ -29,6 +29,8 @@ cloud.config({
 
 
 const imageUpload = (req: Request, res: Response, next: NextFunction) => {
+  console.log(req.body);
+
   upload.single('image')(req, res, async (err) => {
     if (err) {
       console.log(err)

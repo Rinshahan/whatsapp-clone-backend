@@ -26,7 +26,7 @@ const getMessages = asyncErrorHandler(async (req: Request, res: Response) => {
   const userToChatId: string = req.params.id
   const senderId: string = req.user._id
   const getTheMessage = await get(userToChatId, senderId)
-  if (getMessages.length === 0) {
+  if (!getTheMessage) {
     throw new customError("Something went wrong", 404)
   } else {
     res.status(200).json({

@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
 import asyncErrorHandler from "../middlewares/asyncErrorHandler";
-import { getAllUsers, getOneUser } from "../services/userServices";
+import { getAllUsers, getOneUser, updatedUser } from "../services/userServices";
 import { customError } from "../utils/customError";
 import user from "../interfaces/userInterface";
+import { Body } from "twilio/lib/twiml/MessagingResponse";
 
 const getAllTheUsers = asyncErrorHandler(async (req: Request, res: Response) => {
   const loggedInUserId: string = req.user._id
@@ -32,9 +33,20 @@ const getUser = asyncErrorHandler(async (req: Request, res: Response) => {
   })
 })
 
+const updateUser = asyncErrorHandler(async (req: Request, res: Response) => {
+
+  const userId: string = req.params.id
+  const getUpdatedUser = await updatedUser(userId, req.body)
+  res.status(200).json({
+    status: 'success',
+    data: getUpdatedUser
+  })
+})
+
 
 export {
   getAllTheUsers,
-  getUser
+  getUser,
+  updateUser
 }
 

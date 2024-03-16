@@ -39,7 +39,7 @@ const getMessages = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(voi
     const userToChatId = req.params.id;
     const senderId = req.user._id;
     const getTheMessage = yield (0, chatServices_1.get)(userToChatId, senderId);
-    if (getMessages.length === 0) {
+    if (!getTheMessage) {
         throw new customError_1.customError("Something went wrong", 404);
     }
     else {
