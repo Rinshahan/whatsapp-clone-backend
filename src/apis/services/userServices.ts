@@ -16,8 +16,14 @@ const updatedUser = async (userId: string, userData): Promise<user> => {
   return updatedUserById
 }
 
+const deleteUserById = async (userId: string): Promise<string> => {
+  await User.findByIdAndDelete(userId)
+  return 'User Account Deleted'
+}
+
 export {
   getAllUsers,
   getOneUser,
-  updatedUser
+  updatedUser,
+  deleteUserById
 }

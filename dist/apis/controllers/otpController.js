@@ -17,8 +17,9 @@ const asyncErrorHandler_1 = __importDefault(require("../middlewares/asyncErrorHa
 const otpServices_1 = require("../services/otpServices");
 const jsonwebtoken_1 = __importDefault(require("../utils/jsonwebtoken"));
 const sendOtpPhone = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    const phoneNumber = req.body.phone;
-    if (phoneNumber.length == 12) {
+    const phoneNumber = req.body.phoneNumber;
+    console.log(phoneNumber);
+    if (!phoneNumber) {
         res.status(500).json({
             status: "failed",
             message: "please enter a valid phone number"
@@ -32,10 +33,6 @@ const sendOtpPhone = (0, asyncErrorHandler_1.default)((req, res, next) => __awai
                 message: 'OTP Send successfully'
             });
         }
-        // else {
-        //   const error = new customError("Your Number is not Registered!Please Register", 404)
-        //   next(error)
-        // }
     }
 }));
 exports.sendOtpPhone = sendOtpPhone;
@@ -47,9 +44,7 @@ const veryfyphoneOtp = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(
         res.status(200).json({
             status: 'success',
             token: token,
-            data: {
-                user: verfyOtp
-            }
+            user: verfyOtp
         });
     }
 }));

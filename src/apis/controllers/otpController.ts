@@ -8,8 +8,9 @@ import generateToken from "../utils/jsonwebtoken";
 
 
 const sendOtpPhone = asyncErrorHandler(async (req: Request, res: Response, next: NextFunction) => {
-  const phoneNumber: string = req.body.phone
-  if (phoneNumber.length == 12) {
+  const phoneNumber: string = req.body.phoneNumber
+  console.log(phoneNumber)
+  if (!phoneNumber) {
     res.status(500).json({
       status: "failed",
       message: "please enter a valid phone number"
@@ -22,10 +23,6 @@ const sendOtpPhone = asyncErrorHandler(async (req: Request, res: Response, next:
         message: 'OTP Send successfully'
       })
     }
-    // else {
-    //   const error = new customError("Your Number is not Registered!Please Register", 404)
-    //   next(error)
-    // }
   }
 
 })
@@ -38,9 +35,7 @@ const veryfyphoneOtp = asyncErrorHandler(async (req: Request, res: Response) => 
     res.status(200).json({
       status: 'success',
       token: token,
-      data: {
-        user: verfyOtp
-      }
+      user: verfyOtp
     })
   }
 })

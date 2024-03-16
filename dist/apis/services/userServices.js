@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updatedUser = exports.getOneUser = exports.getAllUsers = void 0;
+exports.deleteUserById = exports.updatedUser = exports.getOneUser = exports.getAllUsers = void 0;
 const userSchema_1 = __importDefault(require("../schemas/userSchema"));
 const getAllUsers = (loggedUserId) => __awaiter(void 0, void 0, void 0, function* () {
     const users = yield userSchema_1.default.find({ _id: { $ne: loggedUserId } });
@@ -29,3 +29,8 @@ const updatedUser = (userId, userData) => __awaiter(void 0, void 0, void 0, func
     return updatedUserById;
 });
 exports.updatedUser = updatedUser;
+const deleteUserById = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    yield userSchema_1.default.findByIdAndDelete(userId);
+    return 'User Account Deleted';
+});
+exports.deleteUserById = deleteUserById;

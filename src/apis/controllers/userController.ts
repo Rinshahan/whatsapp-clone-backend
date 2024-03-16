@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import asyncErrorHandler from "../middlewares/asyncErrorHandler";
-import { getAllUsers, getOneUser, updatedUser } from "../services/userServices";
+import { deleteUserById, getAllUsers, getOneUser, updatedUser } from "../services/userServices";
 import { customError } from "../utils/customError";
 import user from "../interfaces/userInterface";
 import { Body } from "twilio/lib/twiml/MessagingResponse";
@@ -43,10 +43,20 @@ const updateUser = asyncErrorHandler(async (req: Request, res: Response) => {
   })
 })
 
+const deleteUser = asyncErrorHandler(async (req: Request, res: Response) => {
+  const userId: string = req.params.id
+  const deleteUser = await deleteUserById(userId)
+  res.status(200).json({
+    status: 'success',
+    data: deleteUser
+  })
+})
+
 
 export {
   getAllTheUsers,
   getUser,
-  updateUser
+  updateUser,
+  deleteUser
 }
 

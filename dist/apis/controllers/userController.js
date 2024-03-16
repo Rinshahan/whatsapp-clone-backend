@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.updateUser = exports.getUser = exports.getAllTheUsers = void 0;
+exports.deleteUser = exports.updateUser = exports.getUser = exports.getAllTheUsers = void 0;
 const asyncErrorHandler_1 = __importDefault(require("../middlewares/asyncErrorHandler"));
 const userServices_1 = require("../services/userServices");
 const customError_1 = require("../utils/customError");
@@ -53,3 +53,12 @@ const updateUser = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void
     });
 }));
 exports.updateUser = updateUser;
+const deleteUser = (0, asyncErrorHandler_1.default)((req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const userId = req.params.id;
+    const deleteUser = yield (0, userServices_1.deleteUserById)(userId);
+    res.status(200).json({
+        status: 'success',
+        data: deleteUser
+    });
+}));
+exports.deleteUser = deleteUser;

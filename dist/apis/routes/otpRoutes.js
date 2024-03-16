@@ -7,6 +7,7 @@ const express_1 = __importDefault(require("express"));
 const otpController_1 = require("../controllers/otpController");
 const otpRoutes = express_1.default.Router();
 otpRoutes.route('/sendOtp')
-    .post(otpController_1.sendOtpPhone)
+    .post(otpController_1.sendOtpPhone);
+otpRoutes.route('/verifyOtp')
     .post(otpController_1.veryfyphoneOtp);
 exports.default = otpRoutes;

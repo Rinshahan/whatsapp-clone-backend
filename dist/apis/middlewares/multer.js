@@ -36,7 +36,6 @@ cloud.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 const imageUpload = (req, res, next) => {
-    console.log(req.body);
     upload.single('image')(req, res, (err) => __awaiter(void 0, void 0, void 0, function* () {
         if (err) {
             console.log(err);

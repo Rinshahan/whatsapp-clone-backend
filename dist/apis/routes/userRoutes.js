@@ -14,4 +14,6 @@ userRoutes.route('/:id')
     .get(protectRoutes_1.default, userController_1.getUser);
 userRoutes.route('/:id')
     .patch(protectRoutes_1.default, multer_1.imageUpload, userController_1.updateUser);
+userRoutes.route('/:id')
+    .delete(protectRoutes_1.default, userController_1.deleteUser);
 exports.default = userRoutes;

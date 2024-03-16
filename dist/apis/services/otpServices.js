@@ -31,7 +31,7 @@ const phoneOtp = (phoneNumber) => __awaiter(void 0, void 0, void 0, function* ()
             //find user and  store otp in db with expiration
             const findUser = yield userSchema_1.default.findOne({ phone: phoneNumber });
             if (!findUser) {
-                throw new customError_1.customError("User not found please Register", 404);
+                throw new customError_1.customError("Can'nt find Registered Phone Number", 404);
             }
             const updatedUser = yield userSchema_1.default.findByIdAndUpdate(findUser._id, {
                 otp: otp,

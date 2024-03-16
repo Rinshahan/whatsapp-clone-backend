@@ -1,5 +1,5 @@
 import express from "express"
-import { getAllTheUsers, getUser, updateUser } from "../controllers/userController"
+import { deleteUser, getAllTheUsers, getUser, updateUser } from "../controllers/userController"
 import protect from "../middlewares/protectRoutes"
 import { imageUpload } from "../middlewares/multer"
 
@@ -13,5 +13,8 @@ userRoutes.route('/:id')
 
 userRoutes.route('/:id')
   .patch(protect, imageUpload, updateUser)
+
+userRoutes.route('/:id')
+  .delete(protect, deleteUser)
 
 export default userRoutes

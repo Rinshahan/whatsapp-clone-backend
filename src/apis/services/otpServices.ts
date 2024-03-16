@@ -19,7 +19,7 @@ const phoneOtp = async (phoneNumber: string): Promise<boolean> => {
       //find user and  store otp in db with expiration
       const findUser: user = await User.findOne({ phone: phoneNumber })
       if (!findUser) {
-        throw new customError("User not found please Register", 404)
+        throw new customError("Can'nt find Registered Phone Number", 404)
       }
       const updatedUser = await User.findByIdAndUpdate(findUser._id, {
         otp: otp,
