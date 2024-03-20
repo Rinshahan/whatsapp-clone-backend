@@ -11,4 +11,6 @@ userAuthRoutes.route('/register')
     .post(multer_1.imageUpload, userAuthController_1.signUpUser);
 userAuthRoutes.route('/login')
     .post(userAuthController_1.loginUser);
+userAuthRoutes.route('/changepassword/:id')
+    .patch(userAuthController_1.userPasswordReset);
 exports.default = userAuthRoutes;

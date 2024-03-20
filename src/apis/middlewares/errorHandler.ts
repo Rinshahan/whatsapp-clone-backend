@@ -1,6 +1,5 @@
-import { NextFunction, Request, Response } from "express";
 
-const errorHandler = (err: { message: any; stack: any; }, req: Request, res: { statusCode: number; status: (arg0: any) => void; json: (arg0: { message: any; stack: any; }) => void; }, next: any) => {
+const errorHandler = (err, req, res, next) => {
   const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
   res.status(statusCode);
   res.json({

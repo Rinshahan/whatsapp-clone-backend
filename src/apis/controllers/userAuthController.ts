@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import asyncErrorHandler from "../middlewares/asyncErrorHandler";
-import { authenticateUser, createUser } from "../services/userAuthController";
+import { authenticateUser, changeCurrentPassword, createUser } from "../services/userAuthServices";
 import generateToken from "../utils/jsonwebtoken";
 import user from "../interfaces/userInterface";
 import { customError } from "../utils/customError";
@@ -35,4 +35,22 @@ const loginUser = asyncErrorHandler(async (req: Request, res: Response, next: Ne
   })
 })
 
-export { signUpUser, loginUser }
+const userPasswordReset = asyncErrorHandler(async (req: Request, res: Response, next: NextFunction) => {
+  const userId: string = req.params.id
+  const previousPassword: string = req.body.prevPassword
+  const newPassword: string = req.body.newPassword
+  const changePassword = await changeCurrentPassword(userId, previousPassword, newPassword)
+  if (changePassword) {
+    res.status(200).json({
+      status: 'success',
+      message: 'Password Updated Successfully'
+    })
+  } else {
+    res.status(500).json({
+      status: "failed",
+      message: 'Entered Password Dont match'
+    })
+  }
+})
+
+export { signUpUser, loginUser, userPasswordReset }
