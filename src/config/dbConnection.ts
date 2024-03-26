@@ -4,7 +4,7 @@ dotenv.config({ path: './config.env' })
 
 const connectDB = async (): Promise<void> => {
   try {
-    const connect = await mongoose.connect(process.env.LOCAL_CONN_STR)
+    const connect = await mongoose.connect(process.env.MONGOATLASCONNECTION)
     console.log(`MongoDB Connected : ${connect.connection.host}`)
   }
   catch (err) {

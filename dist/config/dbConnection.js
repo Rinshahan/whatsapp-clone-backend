@@ -17,7 +17,7 @@ const mongoose_1 = __importDefault(require("mongoose"));
 dotenv_1.default.config({ path: './config.env' });
 const connectDB = () => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const connect = yield mongoose_1.default.connect(process.env.LOCAL_CONN_STR);
+        const connect = yield mongoose_1.default.connect(process.env.MONGOATLASCONNECTION);
         console.log(`MongoDB Connected : ${connect.connection.host}`);
     }
     catch (err) {
