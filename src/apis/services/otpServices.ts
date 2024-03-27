@@ -6,7 +6,7 @@ import User from "../schemas/userSchema"
 import user from "../interfaces/userInterface"
 import { customError } from "../utils/customError"
 
-dotenv.config({ path: './config.env' })
+dotenv.config({ path: '../config.env' })
 
 const client: Twilio = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN)
 
