@@ -10,7 +10,6 @@ dotenv.config({ path: '../config.env' })
 
 const client: Twilio = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN)
 
-const otp11 = 1
 
 const phoneOtp = async (phoneNumber: string): Promise<boolean> => {
   try {
