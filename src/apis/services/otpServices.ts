@@ -6,9 +6,9 @@ import User from "../schemas/userSchema"
 import user from "../interfaces/userInterface"
 import { customError } from "../utils/customError"
 
-dotenv.config({ path: './config.env' })
+dotenv.config({})
 
-const client: Twilio = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN)
+const client: Twilio = twilio("AC0d6eaeb0f0d98f3dad9c523482a32c04", '78fec97b0774690854e185e4d6732ccc')
 
 const phoneOtp = async (phoneNumber: string): Promise<boolean> => {
   try {

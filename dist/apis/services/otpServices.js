@@ -19,8 +19,8 @@ const phoneValidation_1 = __importDefault(require("../utils/phoneValidation"));
 const generateOtp_1 = __importDefault(require("../utils/generateOtp"));
 const userSchema_1 = __importDefault(require("../schemas/userSchema"));
 const customError_1 = require("../utils/customError");
-dotenv_1.default.config({ path: './config.env' });
-const client = (0, twilio_1.default)(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
+dotenv_1.default.config({});
+const client = (0, twilio_1.default)("AC0d6eaeb0f0d98f3dad9c523482a32c04", '78fec97b0774690854e185e4d6732ccc');
 const phoneOtp = (phoneNumber) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!(0, phoneValidation_1.default)(phoneNumber)) { // validating phone number
