@@ -13,12 +13,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.verify = exports.phoneOtp = void 0;
+const dotenv_1 = __importDefault(require("dotenv"));
+const twilio_1 = __importDefault(require("twilio"));
 const phoneValidation_1 = __importDefault(require("../utils/phoneValidation"));
 const generateOtp_1 = __importDefault(require("../utils/generateOtp"));
 const userSchema_1 = __importDefault(require("../schemas/userSchema"));
 const customError_1 = require("../utils/customError");
-// dotenv.config({ path: '../config.env' })
-// const client: Twilio = twilio(process.env.TWILIO_SID, process.env.TWILIO_TOKEN)
+dotenv_1.default.config({ path: '../config.env' });
+const client = (0, twilio_1.default)(process.env.TWILIO_SID, process.env.TWILIO_TOKEN);
 const phoneOtp = (phoneNumber) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         if (!(0, phoneValidation_1.default)(phoneNumber)) { // validating phone number
