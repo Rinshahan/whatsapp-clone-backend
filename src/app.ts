@@ -9,7 +9,7 @@ import userRoutes from "./apis/routes/userRoutes"
 import cors from "cors"
 
 const corsOptions = {
-  origin: "http://localhost:4200",
+  origin: "https://zephyrchat.site",
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };

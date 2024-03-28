@@ -13,7 +13,7 @@ const port: Number = 4000
 
 const io = new Server(httpServer, {
   cors: {
-    origin: ["http://localhost:4200"]
+    origin: ["https://zephyrchat.site"]
   }
 })
 

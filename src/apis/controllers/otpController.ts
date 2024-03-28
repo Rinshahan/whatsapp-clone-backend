@@ -9,7 +9,6 @@ import generateToken from "../utils/jsonwebtoken";
 
 const sendOtpPhone = asyncErrorHandler(async (req: Request, res: Response, next: NextFunction) => {
   const phoneNumber: string = req.body.phoneNumber
-  console.log(phoneNumber)
   if (!phoneNumber) {
     res.status(500).json({
       status: "failed",

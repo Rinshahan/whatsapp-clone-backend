@@ -18,7 +18,6 @@ const otpServices_1 = require("../services/otpServices");
 const jsonwebtoken_1 = __importDefault(require("../utils/jsonwebtoken"));
 const sendOtpPhone = (0, asyncErrorHandler_1.default)((req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const phoneNumber = req.body.phoneNumber;
-    console.log(phoneNumber);
     if (!phoneNumber) {
         res.status(500).json({
             status: "failed",
