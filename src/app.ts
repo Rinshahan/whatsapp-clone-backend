@@ -9,7 +9,7 @@ import userRoutes from "./apis/routes/userRoutes"
 import cors from "cors"
 
 const corsOptions = {
-  origin: "https://zephyrchat.site",
+  origin: "https://zephyr-chatapp.vercel.app/",
   credentials: true, //access-control-allow-credentials:true
   optionSuccessStatus: 200,
 };

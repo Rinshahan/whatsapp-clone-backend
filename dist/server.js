@@ -15,7 +15,7 @@ const httpServer = http_1.default.createServer(app_1.default);
 const port = 4000;
 const io = new socket_io_1.Server(httpServer, {
     cors: {
-        origin: ["https://zephyrchat.site"]
+        origin: ["https://zephyr-chatapp.vercel.app/"]
     }
 });
 io.on("connection", (socket) => {

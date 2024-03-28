@@ -13,7 +13,7 @@ const port: Number = 4000
 
 const io = new Server(httpServer, {
   cors: {
-    origin: ["https://zephyrchat.site"]
+    origin: ["https://zephyr-chatapp.vercel.app/"]
   }
 })
 
